@@ -5,8 +5,9 @@ const { Calculator } = require('../src/calc')
 describe('Calculator', () => {
 
 
-  for (var i = 0; i< 100; i++){
-  it('should add numbers', (done) => {
+  // for (var i = 0; i< 100; i++){
+    it('should add numbers', () => {
+  //it('should add numbers', (done) => {
     // assert.expectation(3)
 
     assert.equal(Calculator.add(2,2), 4)
@@ -16,8 +17,8 @@ describe('Calculator', () => {
     // if (2 !== 3) {
     //   throw new Error('2 not equal to 3')
     // }
-    setTimeout(() => {done()}, Math.random() * 100)
+    // setTimeout(() => {done()}, Math.random() * 100)
   })
-  }
+  // }
 
 })
