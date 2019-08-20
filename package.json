@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "mocha test",
-    "test:coverage": "nyc npm test"
+    "test:coverage": "nyc npm test",
+    "success": "cowsay 'gra gitara!'"
   }
 }
