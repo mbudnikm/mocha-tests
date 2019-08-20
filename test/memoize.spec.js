@@ -5,6 +5,8 @@ const sinon = require('sinon')
 const chai = require('chai')
 chai.should()
 
+const { Calculator } = require('../src/calc')
+
 describe('Memoize decorator', () => {
     it('should return the same result as the wrapped function', () => {
         const square = (n) => n ** 2
@@ -17,6 +19,7 @@ describe('Memoize decorator', () => {
     });
 
     it('should call the wrapped function', () => {
+        // anonymous SPY
         const spy = sinon.spy()
         const memoizedSquare = memoize(spy)
 
@@ -51,7 +54,31 @@ describe('Memoize decorator', () => {
         result1.should.equal(25)
         result2.should.equal(25)
         result3.should.equal(25)
-      })
-    
-      // spying method object
+    })
+
+    it('should memoize functions which operate on various number of parameter', () => {
+       // spying method object
+        const spy = sinon.spy(Calculator, 'add')
+
+        const memoizedAdd = memoize(Calculator.add)
+
+        sinon.assert.notCalled(spy)
+
+        const result1 = memoizedAdd(1, 2)
+        const result2 = memoizedAdd(2, 3)
+
+        sinon.assert.callCount(spy, 2)
+
+        const result3 = memoizedAdd(3, 4)
+        const result4 = memoizedAdd(4, 5)
+
+        sinon.assert.callCount(spy, 4)
+
+        result1.should.equal(3)
+        result2.should.equal(5)
+        result3.should.equal(7)
+        result4.should.equal(9)
+        sinon.assert.calledWith(spy, 1, 2)
+        sinon.assert.calledWith(spy, 4, 5)
+    });
 })
