@@ -9,6 +9,7 @@
   "scripts": {
     "test": "mocha test",
     "test:coverage": "nyc npm test",
+    "test:nyan": "npm test -- --reporter nyan",
     "success": "cowsay 'gra gitara!'"
   }
 }
