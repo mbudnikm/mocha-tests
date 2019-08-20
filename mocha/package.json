@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "mocha": "^6.2.0",
+    "sinon": "^7.4.1"
+  },
+  "scripts": {
+      "test": "mocha test"
+  }
+}

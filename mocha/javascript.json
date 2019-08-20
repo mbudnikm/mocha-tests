@@ -1,0 +1,10 @@
+{
+    "Require": {
+        "prefix": "re",
+        "description": "node.js require module",
+        "body": [
+            "const { ${2:imported} } = require(${1:module})",
+            "$0"
+        ]
+    }
+}
