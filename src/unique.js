@@ -2,7 +2,7 @@ const unique = (collection, uniqueAttr) => {
     if(!uniqueAttr){
         return Array.from(new Set(collection))
     }
-    
+
     const set = new Set()
     const result = []
     collection.forEach(item => {
@@ -15,5 +15,5 @@ const unique = (collection, uniqueAttr) => {
 };
 
 module.exports = {
-    unique
+    unique,
 }

@@ -1,4 +1,4 @@
-const { unique } = require('../src/utils')
+const { unique } = require('../src/unique')
 
 const assert = require('assert')
 
