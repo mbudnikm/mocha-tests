@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:3000'
+const axios = require('axios')
 
 const fetchGeo = () =>
     fetch(`${baseUrl}/geo`)
@@ -47,9 +48,20 @@ const fetchGeoWithOffices = async () => {
 
 }
 
+const axiosGeo = () =>
+  axios.get(`${baseUrl}/geo`)
+    .then(res => res.data)
+
+const axiosOffices = () =>
+  axios.get(`${baseUrl}/offices`)
+    .then(res => res.data)
+
+
 module.exports = {
     baseUrl,
     fetchGeo,
     fetchOffices,
-    fetchGeoWithOffices
+    fetchGeoWithOffices,
+    axiosGeo,
+    axiosOffices
 }

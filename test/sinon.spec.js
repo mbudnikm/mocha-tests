@@ -6,7 +6,7 @@ const chalk = require('chalk')
 
 describe('STUB', () => {
     it('sinon stub', () => {
-    	console.log(chalk.bgMagenta("This is color console.log!"))
+    	console.log(chalk.bgMagenta("This is pink console.log!"))
         const stub = sinon.stub()
         stub.returns(55)
 

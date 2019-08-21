@@ -53,7 +53,35 @@ describe('Cache Promise', () => {
         assert.deepStrictEqual(res1, res3)
     });
 
+});
+
+describe('Cache Promise 2', () => {
+
     it('should make a new http call if previous call has already failed', async () => {
+        const spy = sinon.spy(fetchGeo)
+        const cachedFetchGeo = cachePromise(spy)
         
+        // pierwszy http failuje
+        fetchMock.get(`${baseUrl}/geo`, {
+            //throws: new TypeError("kontrolowane")
+        })
+
+        const res1 = await cachedFetchGeo()
+
+        // assert:
+        sinon.assert.calledOnce(spy)
+
+        // first call
+        fetchMock.restore()
+
+        // drugi http przechodzi
+
+        fetchMock.get(`${baseUrl}/geo`, {
+            result: 123
+        })
+
+        // second call
+
+        fetchMock.restore()
     });
 });
