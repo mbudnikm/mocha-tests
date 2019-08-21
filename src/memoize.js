@@ -1,3 +1,13 @@
+const cachePromise = (promiseFn) => {
+    let req
+    return () => {
+        if(!req) {
+            req = promiseFn()
+        }
+        return req
+    }
+}
+
 const SEPARATOR = '_'
 
 const stringifyArguments = (args) => JSON.stringify(args)
@@ -19,5 +29,6 @@ const memoize = (wrappedFn) => {
 }
 
 module.exports = {
-    memoize
+    memoize,
+    cachePromise
 }

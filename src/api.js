@@ -1,7 +1,5 @@
 const baseUrl = 'http://localhost:3000'
 
-const chalk = require('chalk')
-
 const fetchGeo = () =>
     fetch(`${baseUrl}/geo`)
         .then(res => res.json())

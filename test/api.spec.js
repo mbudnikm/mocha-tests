@@ -4,6 +4,8 @@ const chai = require('chai')
 const expect = chai.expect
 const assert = chai.assert
 
+const sinon = require('sinon')
+
 describe('API HTTP Requests', () => {
   before(() => {
     global.fetch = require('node-fetch')
@@ -29,10 +31,11 @@ describe('API HTTP Requests', () => {
   });
 
   it('should merge geo and office data', async () => {
-      const response = await fetchGeoWithOffices()
-      expect(typeof response).to.equal("object")
-      expect(typeof response.US).to.equal("object")
-      expect(response.US.country).to.equal("United States of America")
-      expect(response.US.offices.length).to.equal(3)  
+    const response = await fetchGeoWithOffices()
+    expect(typeof response).to.equal("object")
+    expect(typeof response.US).to.equal("object")
+    expect(response.US.country).to.equal("United States of America")
+    expect(response.US.offices.length).to.equal(3)  
   });
+
 })
