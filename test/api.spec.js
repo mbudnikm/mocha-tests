@@ -121,9 +121,25 @@ describe('API HTTP Requests', () => {
       mock.restore()
     });
 
-    it('should mock axios calls', async () => {
+    const httpCalledNTimes = (url, method, n, msg) => {
+      const allCalls = mock.history[method]
+      const calls = mock.history.get.filter(call => call.url.includes(url))
+
+      const pass = calls.length === n
+      if (!pass) {
+        if (!msg) msg = `Expected ${n} calls to HTTP ${method} ${url}, got ${calls.length}`
+        throw new Error(msg)
+      }
+    }
+
+    it('should mock axios /geo calls', async () => {
       const res = await axiosGeo()
       expect(res).to.deep.equal({ result: 123 })
+
+      //called once:
+      const exactlyOnce = mock.history.get.filter(call => call.url.includes(`${baseUrl}/geo`)).length === 1
+      httpCalledNTimes(`${baseUrl}/geo`, 'get', 2)
+      expect(exactlyOnce).to.be.true
     });
   });
 
