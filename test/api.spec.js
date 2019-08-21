@@ -127,7 +127,7 @@ describe('API HTTP Requests', () => {
 
       const pass = calls.length === n
       if (!pass) {
-        if (!msg) msg = `Expected ${n} calls to HTTP ${method} ${url}, got ${calls.length}`
+        if (!msg) msg = `Expected ${n} calls to HTTP ${method.toUpperCase()} ${url}, got ${calls.length}`
         throw new Error(msg)
       }
     }
