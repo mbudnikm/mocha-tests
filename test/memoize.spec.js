@@ -113,6 +113,6 @@ describe('Memoize decorator', () => {
         const result1 = spy(f1, f2)
         
         sinon.assert.threw(spy)
-        // sinon.assert.calledOnce(spy)
+        sinon.assert.calledOnce(spy)
       })
 })
