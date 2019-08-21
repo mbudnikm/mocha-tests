@@ -109,10 +109,12 @@ describe('Memoize decorator', () => {
         const memoizedConcat = memoize(concat)
         const spy = sinon.spy(memoizedConcat)
         const f1 = () => {}, f2 = () => {}
-
-        const result1 = spy(f1, f2)
-        
+        try {
+          // expected to throw
+          const result1 = spy(f1, f2)
+        } catch (e) {}
+    
         sinon.assert.threw(spy)
         sinon.assert.calledOnce(spy)
-      })
+    })
 })

@@ -1,4 +1,4 @@
-const { fetchGeo, fetchOffices } = require('../src/api')
+const { fetchGeo, fetchOffices, fetchGeoWithOffices } = require('../src/api')
 
 const chai = require('chai')
 const expect = chai.expect
@@ -23,9 +23,16 @@ describe('API HTTP Requests', () => {
     expect(keysAreCountryCodes).to.be.true
   })
 
-  it('should receive offices data from REST API', async () => {
+  it('should receive offices data from REST API @integration', async () => {
       const response = await fetchOffices()
       expect(response instanceof Array).to.be.true
+  });
 
+  it('should merge geo and office data', async () => {
+      const response = await fetchGeoWithOffices()
+      expect(typeof response).to.equal("object")
+      expect(typeof response.US).to.equal("object")
+      expect(response.US.country).to.equal("United States of America")
+      expect(response.US.offices.length).to.equal(3)  
   });
 })
