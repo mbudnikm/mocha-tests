@@ -3,19 +3,22 @@ const assert = chai.assert
 const sinon = require('sinon')
 const fetchMock = require('fetch-mock')
 
-const { fetchGeo } = require('../src/api')
+const { fetchGeo, baseUrl } = require('../src/api')
 
 const { cachePromise } = require('../src/memoize')
 
 describe('Cache Promise', () => {
 
     before(() => {
-        global.fetch = require('node-fetch')
+        fetchMock.get(`${baseUrl}/geo`, {
+            result: 123,
+        })
+        // global.fetch = require('node-fetch')
       })
     
       after(() => {
-        // global.fetch = undefined <- pozostawia atrybut
-        delete global.fetch
+        // delete global.fetch
+        fetchMock.restore()
       })
 
     it('should return the same http promise when called more than once', async () => {
@@ -24,10 +27,33 @@ describe('Cache Promise', () => {
         const spy = sinon.spy(fetchGeo)
         const cachedFetchGeo = cachePromise(spy)
     
-        await cachedFetchGeo()
-        await cachedFetchGeo()
-        await cachedFetchGeo()
+        const res1 = await cachedFetchGeo()
+        const res2 = await cachedFetchGeo()
+        const res3 = await cachedFetchGeo()
 
         sinon.assert.calledOnce(spy)
+        assert.deepStrictEqual(res1, res2)
+        assert.deepStrictEqual(res1, res3)
+    });
+
+    it('should return the same http promise when called more than once', async () => {
+        //this.timeout(10000)
+
+        const spy = sinon.spy(fetchGeo)
+        const cachedFetchGeo = cachePromise(spy)
+    
+        const [res1, res2, res3] = await Promise.all([
+            cachedFetchGeo(),
+            cachedFetchGeo(),
+            cachedFetchGeo()
+        ])
+
+        sinon.assert.calledOnce(spy)
+        assert.deepStrictEqual(res1, res2)
+        assert.deepStrictEqual(res1, res3)
+    });
+
+    it('should make a new http call if previous call has already failed', async () => {
+        
     });
 });

@@ -48,6 +48,7 @@ const fetchGeoWithOffices = async () => {
 }
 
 module.exports = {
+    baseUrl,
     fetchGeo,
     fetchOffices,
     fetchGeoWithOffices
