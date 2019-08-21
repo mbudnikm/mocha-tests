@@ -81,4 +81,38 @@ describe('Memoize decorator', () => {
         sinon.assert.calledWith(spy, 1, 2)
         sinon.assert.calledWith(spy, 4, 5)
     });
+
+    it('should call wrapped function twice for different array parameteres', () => {
+        const concat = (arr1, arr2) => arr1.concat(arr2)
+        const spy = sinon.spy(concat)
+
+        const memoizedConcat = memoize(spy)
+        const result2 = memoizedConcat([1, 2], [3, 4])
+        const result3 = memoizedConcat([2, 3], [4, 5])
+
+        sinon.assert.calledTwice(spy)
+    });
+
+    it('should call wrapped function twice for different object parameters', () => {
+        const concat = (arr1, arr2) => arr1.concat(arr2)
+        const spy = sinon.spy(concat)
+        const memoizedConcat = memoize(spy)
+
+        const result1 = memoizedConcat([{ value: 1 }], [{ value: 2 }])
+        const result2 = memoizedConcat([{ value: 2 }], [{ value: 3 }])
+        
+        sinon.assert.calledTwice(spy)
+    });
+
+    it('should throw if wrapped function is called with another function as parameter', () => {
+        const concat = (arr1, arr2) => arr1.concat(arr2)
+        const memoizedConcat = memoize(concat)
+        const spy = sinon.spy(memoizedConcat)
+        const f1 = () => {}, f2 = () => {}
+
+        const result1 = spy(f1, f2)
+        
+        sinon.assert.threw(spy)
+        // sinon.assert.calledOnce(spy)
+      })
 })
